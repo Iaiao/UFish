@@ -1,5 +1,5 @@
 name: UFish
-version: 1.0.0
+version: ${version}
 api-version: 1.13
 author: ChunkDev
 main: me.chunkdev.ufish.UFish
