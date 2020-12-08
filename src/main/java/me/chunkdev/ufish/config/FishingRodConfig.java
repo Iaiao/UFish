@@ -10,12 +10,15 @@ public class FishingRodConfig {
     public static double breakingChance = 0.05;
     public static boolean repairingEnabled = true;
     public static Material repairingItem = Material.STRING;
-    public static HashMap<Material, Integer> baits = new HashMap<Material, Integer>() {{
-        put(Material.SPIDER_EYE, 2);
-        put(Material.SUGAR, 5);
-    }};
+    public static HashMap<Material, Integer> baits = new HashMap<>() ;
 
-    static void load(ConfigurationSection config) {
-        // TODO
+    public static void load(ConfigurationSection config) {
+        breakingEnabled = config.getBoolean("breaking.enabled");
+        breakingChance = config.getDouble("breaking.chance") / 100.0;
+        repairingEnabled = config.getBoolean("repairing.enabled");
+        repairingItem = Material.matchMaterial(config.getString("repairing.item"));
+        for(String key : config.getConfigurationSection("baits").getKeys(false)) {
+            baits.put(Material.matchMaterial(key), config.getInt("baits." + key));
+        }
     }
 }

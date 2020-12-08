@@ -1,0 +1,28 @@
+rod:
+  breaking:
+    enabled: on
+    chance: 30
+  repairing:
+    enabled: on
+    item: string
+  baits:
+    # item: luck
+    spider_eye: 50
+    paper: 10
+
+fish:
+  fishes:
+    # name: hunger
+    "&aCustom fish 1": 5
+    "&6Custom fish 2": 1
+    "&cCustom fish 3": -1
+  biomes:
+    ocean:
+      - "&aCustom fish 1"
+      - "&6Custom fish 2"
+      - "&cCustom fish 3"
+
+messages:
+  broke: "&cYour Fishing Rod is broken :(\n&6But you can repair it with string in your other hand!"
+  isbroken: "&cYou can't use your Fishing Rod!\nGet a string in your other hand and right click with fishing rod in hand and string in the other hand."
+  repaired: "&aYou have successfully repaired your Fishing Rod!"

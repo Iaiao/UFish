@@ -10,7 +10,7 @@ import java.util.Optional;
 
 public class FishingRod {
     private final ItemStack item;
-    private static NamespacedKey broken = new NamespacedKey(UFish.getPlugin(UFish.class), "broken");
+    private static final NamespacedKey broken = new NamespacedKey(UFish.getPlugin(UFish.class), "broken");
 
     private FishingRod(ItemStack item) {
         this.item = item;

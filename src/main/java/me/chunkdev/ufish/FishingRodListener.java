@@ -1,6 +1,7 @@
 package me.chunkdev.ufish;
 
 import me.chunkdev.ufish.config.FishingRodConfig;
+import me.chunkdev.ufish.config.MessagesConfig;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
@@ -39,13 +40,17 @@ public class FishingRodListener implements Listener {
                         } else {
                             event.getPlayer().swingMainHand();
                         }
+                        event.getPlayer().sendMessage(MessagesConfig.repaired);
                         fishingRod.repairFishingRod();
-                        event.setCancelled(true);
+                    } else {
+                        event.getPlayer().sendMessage(MessagesConfig.isBroken);
                     }
+                    event.setCancelled(true);
                 } else {
                     if (FishingRodConfig.breakingEnabled) {
                         if (new Random().nextDouble() < FishingRodConfig.breakingChance) {
                             if (FishingRodConfig.repairingEnabled) {
+                                event.getPlayer().sendMessage(MessagesConfig.broke);
                                 fishingRod.breakFishingRod();
                             } else {
                                 fishingRod.getItem().setType(Material.AIR);
@@ -61,14 +66,14 @@ public class FishingRodListener implements Listener {
                         } else {
                             event.getPlayer().swingMainHand();
                         }
-                        event.getPlayer().getAttribute(Attribute.GENERIC_LUCK).setBaseValue(event.getPlayer().getAttribute(Attribute.GENERIC_LUCK).getBaseValue() + luck * 10);
+                        event.getPlayer().getAttribute(Attribute.GENERIC_LUCK).setBaseValue(event.getPlayer().getAttribute(Attribute.GENERIC_LUCK).getBaseValue() + luck);
                         luckEffect.put(event.getPlayer(), luck);
                     }
                 }
             }
         } else {
             if (luckEffect.containsKey(event.getPlayer())) {
-                event.getPlayer().getAttribute(Attribute.GENERIC_LUCK).setBaseValue(event.getPlayer().getAttribute(Attribute.GENERIC_LUCK).getBaseValue() - luckEffect.get(event.getPlayer()) * 10);
+                event.getPlayer().getAttribute(Attribute.GENERIC_LUCK).setBaseValue(event.getPlayer().getAttribute(Attribute.GENERIC_LUCK).getBaseValue() - luckEffect.get(event.getPlayer()));
                 luckEffect.remove(event.getPlayer());
             }
         }
@@ -77,7 +82,7 @@ public class FishingRodListener implements Listener {
     @EventHandler
     public void onLeave(PlayerQuitEvent event) {
         if (luckEffect.containsKey(event.getPlayer())) {
-            event.getPlayer().getAttribute(Attribute.GENERIC_LUCK).setBaseValue(event.getPlayer().getAttribute(Attribute.GENERIC_LUCK).getBaseValue() - luckEffect.get(event.getPlayer()) * 10);
+            event.getPlayer().getAttribute(Attribute.GENERIC_LUCK).setBaseValue(event.getPlayer().getAttribute(Attribute.GENERIC_LUCK).getBaseValue() - luckEffect.get(event.getPlayer()));
             luckEffect.remove(event.getPlayer());
         }
     }
