@@ -8,5 +8,6 @@ public class UFish extends JavaPlugin {
     public void onEnable() {
         getServer().getPluginManager().registerEvents(new FishingListener(), this);
         getServer().getPluginManager().registerEvents(new FishingRodListener(), this);
+        getServer().getPluginManager().registerEvents(new FishTypeListener(), this);
     }
 }
