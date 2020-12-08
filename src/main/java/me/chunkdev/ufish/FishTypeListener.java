@@ -8,6 +8,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerFishEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
+import org.bukkit.inventory.EquipmentSlot;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
@@ -33,6 +35,8 @@ public class FishTypeListener implements Listener {
 
     @EventHandler
     public void onEat(PlayerItemConsumeEvent event) {
+        EquipmentSlot hand = event.getPlayer().getEquipment().getItemInMainHand().equals(event.getItem()) ? EquipmentSlot.HAND : EquipmentSlot.OFF_HAND;
+        ItemStack item = event.getPlayer().getEquipment().getItem(hand);
         if (FishTypesConfig.enabled) {
             if (event.getItem().getType() == Material.COD) {
                 if (event.getItem().hasItemMeta()) {
@@ -41,7 +45,7 @@ public class FishTypeListener implements Listener {
                     if (meta.getPersistentDataContainer().has(FishType.HUNGER_KEY, PersistentDataType.INTEGER)) {
                         Integer hunger = meta.getPersistentDataContainer().get(FishType.HUNGER_KEY, PersistentDataType.INTEGER);
                         assert hunger != null;
-                        event.getItem().setAmount(event.getItem().getAmount() - 1);
+                        item.setAmount(item.getAmount() - 1);
                         event.setCancelled(true);
                         event.getPlayer().setFoodLevel(event.getPlayer().getFoodLevel() + hunger);
                     }
