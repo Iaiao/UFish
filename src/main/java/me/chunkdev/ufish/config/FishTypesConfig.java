@@ -12,9 +12,10 @@ import java.util.stream.Collectors;
 
 public class FishTypesConfig {
     public static Map<Biome, List<FishType>> types = new HashMap<>();
-    public static boolean enabled = true;
+    public static double doublingChance;
 
     public static void load(ConfigurationSection config) {
+        doublingChance = config.getDouble("doublingchance") / 100.0;
         Map<String, FishType> types = new HashMap<>();
         for (String key : config.getConfigurationSection("fishes").getKeys(false)) {
             int hunger = config.getInt("fishes." + key);
