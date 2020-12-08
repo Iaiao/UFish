@@ -11,7 +11,7 @@ rod:
     paper: 10
 
 fish:
-  # double salmon or double custom fish chance
+  # double salmon or double custom fish chance when in boat
   doublingchance: 50
   fishes:
     # name: hunger
