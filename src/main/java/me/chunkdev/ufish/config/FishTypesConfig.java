@@ -18,7 +18,7 @@ public class FishTypesConfig {
         doublingChance = config.getDouble("doublingchance") / 100.0;
         Map<String, FishType> types = new HashMap<>();
         for (String key : config.getConfigurationSection("fishes").getKeys(false)) {
-            int hunger = config.getInt("fishes." + key);
+            int hunger = config.getInt("fish." + key);
             types.put(key, new FishType(ChatColor.translateAlternateColorCodes('&', key), hunger));
         }
         for (String key : config.getConfigurationSection("biomes").getKeys(false)) {

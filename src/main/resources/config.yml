@@ -13,7 +13,7 @@ rod:
 fish:
   # double salmon or double custom fish chance when in boat
   doublingchance: 50
-  fishes:
+  fish:
     # name: hunger
     "&aCustom fish 1": 5
     "&6Custom fish 2": 1
