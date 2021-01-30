@@ -24,18 +24,15 @@ public class FishTypeListener implements Listener {
             assert caught != null;
             switch (caught.getItemStack().getType()) {
                 case COD:
+                case SALMON:
                     Biome biome = caught.getLocation().getBlock().getBiome();
                     if (FishTypesConfig.types.containsKey(biome)) {
                         FishType type = FishTypesConfig.types.get(biome).get(new Random().nextInt(FishTypesConfig.types.get(biome).size()));
                         caught.setItemStack(type.getItem());
-                    }
-                    /* Falling through */
-                case SALMON:
-                    if (event.getPlayer().isInsideVehicle() && event.getPlayer().getVehicle().getType() == EntityType.BOAT) {
-                        if (Math.random() < FishTypesConfig.doublingChance) {
-                            ItemStack item = caught.getItemStack();
-                            item.setAmount(item.getAmount() + 1);
-                            caught.setItemStack(item);
+                        if (event.getPlayer().isInsideVehicle() && event.getPlayer().getVehicle().getType() == EntityType.BOAT) {
+                            if (Math.random() < FishTypesConfig.doublingChance) {
+                                caught.getItemStack().setAmount(2);
+                            }
                         }
                     }
             }
