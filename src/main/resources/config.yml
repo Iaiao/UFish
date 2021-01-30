@@ -11,7 +11,7 @@ rod:
     paper: 10
 
 fish:
-  # double salmon or double custom fish chance when in boat
+  # double fish chance when fishing in boat
   doublingchance: 50
   fish:
     # name: hunger
@@ -20,9 +20,10 @@ fish:
     "&cCustom fish 3": -1
   biomes:
     ocean:
-      - "&aCustom fish 1"
-      - "&6Custom fish 2"
-      - "&cCustom fish 3"
+      # name: chance
+      "&aCustom fish 1": 1
+      "&6Custom fish 2": 2
+      "&cCustom fish 3": 5
 
 messages:
   broke: "&cYour Fishing Rod is broken :(\n&6But you can repair it with string in your other hand!"

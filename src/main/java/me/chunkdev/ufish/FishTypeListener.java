@@ -14,7 +14,11 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 public class FishTypeListener implements Listener {
     @EventHandler
@@ -27,7 +31,21 @@ public class FishTypeListener implements Listener {
                 case SALMON:
                     Biome biome = caught.getLocation().getBlock().getBiome();
                     if (FishTypesConfig.types.containsKey(biome)) {
-                        FishType type = FishTypesConfig.types.get(biome).get(new Random().nextInt(FishTypesConfig.types.get(biome).size()));
+                        HashMap<FishType, Integer> fish = FishTypesConfig.types.get(biome);
+                        FishType type = null;
+                        int max = fish
+                                .values()
+                                .stream()
+                                .reduce(Integer::sum)
+                                .get();
+                        int rand = new Random().nextInt(max);
+                        int i = 0;
+                        List<Map.Entry<FishType, Integer>> types = fish.entrySet().stream().collect(Collectors.toList());
+                        while (rand > 0) {
+                            i++;
+                            rand -= types.get(i).getValue();
+                            type = types.get(i).getKey();
+                        }
                         caught.setItemStack(type.getItem());
                         if (event.getPlayer().isInsideVehicle() && event.getPlayer().getVehicle().getType() == EntityType.BOAT) {
                             if (Math.random() < FishTypesConfig.doublingChance) {
