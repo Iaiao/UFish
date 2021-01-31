@@ -25,34 +25,35 @@ public class FishTypeListener implements Listener {
     public void onFish(PlayerFishEvent event) {
         if (event.getState() == PlayerFishEvent.State.CAUGHT_FISH) {
             Item caught = (Item) event.getCaught();
-            assert caught != null;
-            switch (caught.getItemStack().getType()) {
-                case COD:
-                case SALMON:
-                    Biome biome = caught.getLocation().getBlock().getBiome();
-                    if (FishTypesConfig.types.containsKey(biome)) {
-                        HashMap<FishType, Integer> fish = FishTypesConfig.types.get(biome);
-                        FishType type = null;
-                        int max = fish
-                                .values()
-                                .stream()
-                                .reduce(Integer::sum)
-                                .get();
-                        int rand = new Random().nextInt(max);
-                        int i = 0;
-                        List<Map.Entry<FishType, Integer>> types = fish.entrySet().stream().collect(Collectors.toList());
-                        while (rand > 0) {
-                            i++;
-                            rand -= types.get(i).getValue();
-                            type = types.get(i).getKey();
-                        }
-                        caught.setItemStack(type.getItem());
-                        if (event.getPlayer().isInsideVehicle() && event.getPlayer().getVehicle().getType() == EntityType.BOAT) {
-                            if (Math.random() < FishTypesConfig.doublingChance) {
-                                caught.getItemStack().setAmount(2);
+            if(caught != null) {
+                switch (caught.getItemStack().getType()) {
+                    case COD:
+                    case SALMON:
+                        Biome biome = caught.getLocation().getBlock().getBiome();
+                        if (FishTypesConfig.types.containsKey(biome)) {
+                            HashMap<FishType, Integer> fish = FishTypesConfig.types.get(biome);
+                            FishType type = null;
+                            int max = fish
+                                    .values()
+                                    .stream()
+                                    .reduce(Integer::sum)
+                                    .get();
+                            int rand = new Random().nextInt(max);
+                            int i = 0;
+                            List<Map.Entry<FishType, Integer>> types = fish.entrySet().stream().collect(Collectors.toList());
+                            while (rand > 0) {
+                                i++;
+                                rand -= types.get(i).getValue();
+                                type = types.get(i).getKey();
+                            }
+                            caught.setItemStack(type.getItem());
+                            if (event.getPlayer().isInsideVehicle() && event.getPlayer().getVehicle().getType() == EntityType.BOAT) {
+                                if (Math.random() < FishTypesConfig.doublingChance) {
+                                    caught.getItemStack().setAmount(2);
+                                }
                             }
                         }
-                    }
+                }
             }
         }
     }
